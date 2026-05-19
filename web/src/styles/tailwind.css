@@ -1,0 +1,245 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* ========== Primary Color Variables ========== */
+    /* Text Colors */
+    --text-primary: #000000;
+    --text-secondary: #000000b2;
+    --text-muted: #6b7280;
+    --text-light: #4b5563;
+    --text-gray: #888888;
+    --text-gray-light: #9ca3af;
+    --text-gray-dark: #a0a0a0;
+    --text-white: #ffffff;
+    --text-semi-transparent: #0000007f;
+    --text-dark: #111111;
+
+    /* Background Colors */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f8f8;
+    --bg-light: #f3f4f6;
+    --bg-gray: #e5e5e5;
+    --bg-gray-light: #d9d9d9;
+    --bg-purple-light: #eeeefa;
+    --bg-purple-lighter: #eaeafa;
+    --bg-green-light: #e8f5e9;
+    --bg-pink-light: #fce4ec;
+    --bg-black: #000000;
+    --bg-accent: #ff5722ab;
+    --bg-overlay: #0d111711;
+
+    /* Border Colors */
+    --border-primary: #e5e7eb;
+    --border-secondary: #f3f4f6;
+    --border-dark: #000000;
+    --border-gray: #8e8e93;
+    --border-gray-dark: #948a8a;
+    --border-gray-light: #aaa4a4;
+
+    /* ========== Component-Specific Colors ========== */
+    /* Header Component */
+    --header-border: var(--border-gray-light);
+    
+    /* Button Component */
+    --button-bg-primary: #000000;
+    --button-bg-secondary: #f3f4f6;
+    --button-bg-accent: #ff5722ab;
+    --button-text-primary: #ffffff;
+    --button-text-secondary: #000000;
+    --button-text-muted: #4b5563;
+    --button-border-primary: #000000;
+    --button-border-secondary: #e5e7eb;
+
+    /* Dropdown Component */
+    --dropdown-bg: #ffffff;
+    --dropdown-text: #000000;
+    --dropdown-border: #e5e7eb;
+
+    /* Icon Button Component */
+    --icon-button-bg-primary: #ffffff;
+    --icon-button-bg-secondary: #f3f4f6;
+    --icon-button-border: #e5e7eb;
+
+    /* List Component */
+    --list-bg: #eeeefa;
+    --list-border: #f3f4f6;
+
+    /* Link Component */
+    --link-text-primary: #000000;
+    --link-text-secondary: #6b7280;
+
+    /* ========== Typography Variables ========== */
+    /* Font Sizes */
+    --font-size-xs: 12px;
+    --font-size-sm: 14px;
+    --font-size-base: 16px;
+    --font-size-lg: 18px;
+    --font-size-xl: 20px;
+    --font-size-2xl: 24px;
+    --font-size-3xl: 28px;
+    --font-size-4xl: 30px;
+    --font-size-5xl: 32px;
+    --font-size-6xl: 36px;
+    --font-size-7xl: 40px;
+    --font-size-8xl: 48px;
+
+    /* Font Weights */
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    /* Line Heights */
+    --line-height-xs: 15px;
+    --line-height-sm: 17px;
+    --line-height-base: 19px;
+    --line-height-lg: 20px;
+    --line-height-xl: 22px;
+    --line-height-2xl: 25px;
+    --line-height-3xl: 26px;
+    --line-height-4xl: 29px;
+    --line-height-5xl: 30px;
+    --line-height-6xl: 37px;
+    --line-height-7xl: 39px;
+    --line-height-8xl: 41px;
+    --line-height-9xl: 44px;
+    --line-height-10xl: 46px;
+    --line-height-11xl: 49px;
+    --line-height-12xl: 59px;
+
+    /* Font Families */
+    --font-primary: 'Inter', sans-serif;
+    --font-secondary: 'Hanuman', serif;
+
+    /* ========== Spacing Variables ========== */
+    /* Margin Values */
+    --margin-xs: 4px;
+    --margin-sm: 6px;
+    --margin-md: 8px;
+    --margin-lg: 10px;
+    --margin-xl: 12px;
+    --margin-2xl: 14px;
+    --margin-3xl: 16px;
+    --margin-4xl: 20px;
+    --margin-5xl: 22px;
+    --margin-6xl: 24px;
+    --margin-7xl: 26px;
+    --margin-8xl: 28px;
+    --margin-9xl: 30px;
+    --margin-10xl: 32px;
+    --margin-11xl: 38px;
+    --margin-12xl: 44px;
+    --margin-13xl: 50px;
+    --margin-14xl: 52px;
+    --margin-15xl: 64px;
+    --margin-16xl: 68px;
+    --margin-17xl: 80px;
+    --margin-18xl: 82px;
+    --margin-19xl: 98px;
+    --margin-20xl: 102px;
+    --margin-21xl: 132px;
+    --margin-22xl: 146px;
+    --margin-23xl: 148px;
+    --margin-24xl: 172px;
+    --margin-25xl: 214px;
+    --margin-26xl: 506px;
+
+    /* Padding Values */
+    --padding-xs: 2px;
+    --padding-sm: 4px;
+    --padding-md: 8px;
+    --padding-lg: 10px;
+    --padding-xl: 12px;
+    --padding-2xl: 14px;
+    --padding-3xl: 16px;
+    --padding-4xl: 18px;
+    --padding-5xl: 20px;
+    --padding-6xl: 22px;
+    --padding-7xl: 24px;
+    --padding-8xl: 26px;
+    --padding-9xl: 28px;
+    --padding-10xl: 32px;
+    --padding-11xl: 34px;
+    --padding-12xl: 36px;
+    --padding-13xl: 38px;
+    --padding-14xl: 40px;
+    --padding-15xl: 48px;
+    --padding-16xl: 56px;
+    --padding-17xl: 64px;
+    --padding-18xl: 80px;
+    --padding-19xl: 98px;
+    --padding-20xl: 158px;
+
+    /* Gap Values */
+    --gap-xs: 2px;
+    --gap-sm: 4px;
+    --gap-md: 6px;
+    --gap-lg: 8px;
+    --gap-xl: 10px;
+    --gap-2xl: 12px;
+    --gap-3xl: 14px;
+    --gap-4xl: 16px;
+    --gap-5xl: 22px;
+    --gap-6xl: 24px;
+    --gap-7xl: 30px;
+    --gap-8xl: 32px;
+    --gap-9xl: 40px;
+    --gap-10xl: 42px;
+    --gap-11xl: 44px;
+    --gap-12xl: 56px;
+    --gap-13xl: 156px;
+
+    /* ========== Border Variables ========== */
+    /* Border Radius */
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+    --radius-xl: 12px;
+    --radius-2xl: 16px;
+    --radius-3xl: 20px;
+    --radius-4xl: 24px;
+    --radius-5xl: 28px;
+
+    /* Border Width */
+    --border-width-none: 0px;
+    --border-width-thin: 1px;
+    --border-width-medium: 2px;
+
+    /* ========== Layout Variables ========== */
+    /* Width Values */
+    --width-full: 100%;
+    --width-auto: auto;
+    --width-xs: 8%;
+    --width-sm: 18%;
+    --width-md: 24%;
+    --width-lg: 26%;
+    --width-xl: 28%;
+    --width-2xl: 30%;
+    --width-3xl: 32%;
+    --width-4xl: 34%;
+    --width-5xl: 40%;
+    --width-6xl: 62%;
+    --width-7xl: 64%;
+    --width-8xl: 84%;
+    --width-9xl: 86%;
+    --width-10xl: 88%;
+    --width-11xl: 92%;
+    --width-12xl: 94%;
+    --width-13xl: 96%;
+    --width-fixed-sm: 22px;
+    --width-fixed-md: 34px;
+    --width-fixed-lg: 40px;
+    --width-fixed-xl: 44px;
+    --width-fixed-2xl: 52px;
+    --width-fixed-3xl: 58px;
+    --width-fixed-4xl: 68px;
+    --width-fixed-5xl: 146px;
+    --width-fixed-6xl: 148px;
+    --width-fixed-7xl: 162px;
+    --width-fixed-8xl: 164px;
+    --width-fixed-9xl: 600px;
+  }
+}
