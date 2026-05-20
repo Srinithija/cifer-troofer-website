@@ -79,8 +79,21 @@ const ServicesPreview = () => {
               onReadMore={() => {}}
               isVisible={isVisible}
               delay={index * 100}
+              showReadMore={false}
             />
           ))}
+        </div>
+               <div className="text-center mt-12">
+          <a
+            href="/services"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#6366f1] to-[#8b5cf6] text-white font-semibold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300"
+            style={{ fontFamily: 'Inter' }}
+          >
+            View All Services
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
         </div>
       </div>
     </section>

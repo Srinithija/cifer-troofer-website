@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Button from '../../components/ui/Button';
+import { useNavigate } from 'react-router-dom';
 
 const ServicesCTA = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -63,7 +65,7 @@ const ServicesCTA = () => {
                 layout_gap="0"
                 variant="primary"
                 size="medium"
-                onClick={() => {}}
+              onClick={() => navigate('/contact')}
                 className="hover:shadow-2xl hover:scale-105 transition-all duration-300"
               />
               <Button
@@ -84,7 +86,7 @@ const ServicesCTA = () => {
                 layout_gap="0"
                 variant="outline"
                 size="medium"
-                onClick={() => {}}
+              onClick={() => navigate('/contact')}
                 className="hover:bg-[#6366f1]/10 transition-all duration-300"
               />
             </div>

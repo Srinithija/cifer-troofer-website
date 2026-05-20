@@ -93,12 +93,11 @@ const HomeServices = () => {
                 icon={service.icon}
                 title={service.title}
                 description={service.description}
-                onReadMore={() => {}}
+                showReadMore={false}
               />
             </div>
           ))}
         </div>
-
         {/* CTA */}
         <div className="text-center mt-12">
           <a

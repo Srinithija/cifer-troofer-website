@@ -41,50 +41,7 @@ const ServicesHero = () => {
             >
               We deliver cutting-edge solutions that transform businesses and drive sustainable growth in the digital era.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button
-                text="Get Started"
-                text_font_size="16"
-                text_font_family="Inter"
-                text_font_weight="600"
-                text_line_height="20px"
-                text_text_align="center"
-                text_color="#6366f1"
-                fill_background_color="#ffffff"
-                border_border_radius="12px"
-                border_border="none"
-                padding="16px 40px"
-                layout_width="auto"
-                position="relative"
-                margin="0"
-                layout_gap="0"
-                variant="primary"
-                size="medium"
-                onClick={() => {}}
-                className="hover:shadow-2xl hover:scale-105 transition-all duration-300"
-              />
-              <Button
-                text="Learn More"
-                text_font_size="16"
-                text_font_family="Inter"
-                text_font_weight="600"
-                text_line_height="20px"
-                text_text_align="center"
-                text_color="#ffffff"
-                fill_background_color="transparent"
-                border_border="2px solid #ffffff"
-                border_border_radius="12px"
-                padding="16px 40px"
-                layout_width="auto"
-                position="relative"
-                margin="0"
-                layout_gap="0"
-                variant="outline"
-                size="medium"
-                onClick={() => {}}
-                className="hover:bg-white/10 transition-all duration-300"
-              />
-            </div>
+          
           </div>
 
           {/* Right Image */}

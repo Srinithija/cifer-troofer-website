@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from '../../components/ui/Button';
 
 const HomeHero = () => {
+  const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -47,6 +49,7 @@ const HomeHero = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button
+                type="button"
                 text="Get Started"
                 text_font_size="16"
                 text_font_family="Inter"
@@ -64,10 +67,11 @@ const HomeHero = () => {
                 layout_gap="0"
                 variant="primary"
                 size="medium"
-                onClick={() => {}}
+                onClick={() => navigate('/contact')}
                 className="hover:shadow-2xl hover:scale-105 transition-all duration-300"
               />
               <Button
+                type="button"
                 text="Learn More"
                 text_font_size="16"
                 text_font_family="Inter"
@@ -85,7 +89,7 @@ const HomeHero = () => {
                 layout_gap="0"
                 variant="outline"
                 size="medium"
-                onClick={() => {}}
+                onClick={() => navigate('/about')}
                 className="hover:bg-white/10 transition-all duration-300"
               />
             </div>

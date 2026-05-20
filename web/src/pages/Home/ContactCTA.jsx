@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from '../../components/ui/Button';
 
 const ContactCTA = () => {
+  const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -67,7 +69,7 @@ const ContactCTA = () => {
               layout_gap="0"
               variant="primary"
               size="medium"
-              onClick={() => {}}
+              onClick={() => navigate('/contact')}
               className="hover:shadow-2xl hover:scale-105 transition-all duration-300"
             />
             <Button
@@ -88,7 +90,7 @@ const ContactCTA = () => {
               layout_gap="0"
               variant="outline"
               size="medium"
-              onClick={() => {}}
+              onClick={() => navigate('/contact')}
               className="hover:bg-white/10 transition-all duration-300"
             />
           </div>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Button from './Button';
 
-const ServiceCard = ({ icon, title, description, onReadMore, isVisible = true, delay = 0 }) => {
+const ServiceCard = ({ icon, title, description, onReadMore, isVisible = true, delay = 0, showReadMore = true }) => {
   const [animationState, setAnimationState] = useState('opacity-0 translate-y-10');
 
   useEffect(() => {
@@ -48,28 +48,30 @@ const ServiceCard = ({ icon, title, description, onReadMore, isVisible = true, d
         {description}
       </p>
 
-      {/* Read More Button */}
-      <Button
-        text="Read More →"
-        text_font_size="14"
-        text_font_family="Inter"
-        text_font_weight="500"
-        text_line_height="20px"
-        text_text_align="left"
-        text_color="#6366f1"
-        fill_background_color="transparent"
-        border_border="none"
-        border_border_radius="4px"
-        padding="0"
-        layout_width="auto"
-        position="relative"
-        margin="0"
-        layout_gap="0"
-        variant="outline"
-        size="sm"
-        onClick={onReadMore}
-        className="hover:text-[#4f46e5] transition-all duration-200 inline-flex items-center gap-1"
-      />
+      {/* Read More Button (optional) */}
+      {showReadMore && (
+        <Button
+          text="Read More →"
+          text_font_size="14"
+          text_font_family="Inter"
+          text_font_weight="500"
+          text_line_height="20px"
+          text_text_align="left"
+          text_color="#6366f1"
+          fill_background_color="transparent"
+          border_border="none"
+          border_border_radius="4px"
+          padding="0"
+          layout_width="auto"
+          position="relative"
+          margin="0"
+          layout_gap="0"
+          variant="outline"
+          size="sm"
+          onClick={onReadMore}
+          className="hover:text-[#4f46e5] transition-all duration-200 inline-flex items-center gap-1"
+        />
+      )}
     </div>
   );
 };
