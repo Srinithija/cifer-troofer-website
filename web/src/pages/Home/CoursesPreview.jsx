@@ -123,30 +123,10 @@ const CoursesPreview = () => {
                   style={{
                     fontFamily: 'Inter',
                   }}
-                >
+                >  
                   {course.price}
                 </span>
-                <Button
-                  text="Enroll"
-                  text_font_size="14"
-                  text_font_family="Inter"
-                  text_font_weight="600"
-                  text_line_height="20px"
-                  text_text_align="center"
-                  text_color="#ffffff"
-                  fill_background_color="#6366f1"
-                  border_border_radius="8px"
-                  border_border="none"
-                  padding="10px 20px"
-                  layout_width="auto"
-                  position="relative"
-                  margin="0"
-                  layout_gap="0"
-                  variant="primary"
-                  size="sm"
-                  onClick={() => {}}
-                  className="hover:shadow-lg transition-all duration-300"
-                />
+
               </div>
             </div>
           ))}
