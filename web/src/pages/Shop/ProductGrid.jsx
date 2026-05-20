@@ -110,79 +110,6 @@ const ProductGrid = () => {
       <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Filter and Sort Controls */}
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-[24px] sm:mb-[32px] md:mb-[40px]">
-          {/* Category Filters */}
-          <div className="flex flex-wrap items-center gap-2">
-            <Button
-              text="All"
-              text_font_size="14"
-              text_color="#ffffff"
-              fill_background_color="#6366f1"
-              border_border_radius="8px"
-              border_border="none"
-              padding="10px 24px"
-              className="hover:shadow-lg hover:scale-105 transition-all duration-300"
-              layout_width="auto"
-              position="relative"
-              margin="0"
-              layout_gap="0"
-              variant="primary"
-              size="md"
-              onClick={() => setSelectedCategory('all')}
-            />
-            <Button
-              text="Gadgets/kits"
-              text_font_size="14"
-              text_color="#6366f1"
-              fill_background_color="#f3f4f6"
-              border_border_radius="8px"
-              border_border="1px solid #e5e7eb"
-              padding="10px 24px"
-              className="hover:bg-gray-100 transition-all duration-300"
-              layout_width="auto"
-              position="relative"
-              margin="0"
-              layout_gap="0"
-              variant="secondary"
-              size="md"
-              onClick={() => setSelectedCategory('gadgets')}
-            />
-          </div>
-
-          {/* Sort and Filter */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full lg:w-auto">
-            <Dropdown
-              placeholder="Sort by: Newest"
-              options={sortOptions}
-              text_font_size="14"
-              layout_width="100%"
-              padding="10px 14px 10px 24px"
-              className="sm:w-[200px] md:w-[220px]"
-              layout_gap="0"
-              position="relative"
-              value=""
-              onChange={() => {}}
-              size="md"
-              dropdownClassName=""
-            />
-            <Button
-              text="Filter"
-              text_font_size="14"
-              text_font_weight="500"
-              text_color="#ffffff"
-              fill_background_color="#6366f1"
-              border_border="none"
-              border_border_radius="8px"
-              padding="10px 24px"
-              className="hover:shadow-lg hover:scale-105 transition-all duration-300"
-              layout_width="auto"
-              position="relative"
-              margin="0"
-              layout_gap="0"
-              variant="primary"
-              size="md"
-              onClick={() => {}}
-            />
-          </div>
         </div>
 
         {/* Product Grid */}
@@ -247,14 +174,12 @@ const ProductGrid = () => {
                     fill_background_color="#6366f1"
                     border_border_radius="8px"
                     border_border="none"
-                    padding="8px 16px"
                     className="hover:shadow-lg hover:scale-105 transition-all duration-300"
                     layout_width="auto"
                     position="relative"
                     margin="0"
                     layout_gap="0"
                     variant="primary"
-                    size="sm"
                     onClick={() => handleAddToCart(product)}
                   />
                 </div>
