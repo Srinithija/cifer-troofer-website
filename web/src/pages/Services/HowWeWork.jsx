@@ -1,6 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const HowWeWork = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const element = document.getElementById('how-we-work');
+    if (element) observer.observe(element);
+
+    return () => observer.disconnect();
+  }, []);
+
   const steps = [
     {
       number: '01',
@@ -35,10 +53,10 @@ const HowWeWork = () => {
   ];
 
   return (
-    <section className="w-full bg-white py-[60px] sm:py-[80px] md:py-[100px]">
+    <section id="how-we-work" className="w-full bg-gradient-to-br from-white to-[#f8fafc] py-[60px] sm:py-[80px] md:py-[100px]">
       <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-12 sm:mb-16">
+        <div className={`text-center mb-12 sm:mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <h2
             className="text-[32px] sm:text-[40px] md:text-[48px] font-bold leading-[1.2] mb-4"
             style={{
@@ -64,7 +82,8 @@ const HowWeWork = () => {
           {steps.map((step, index) => (
             <div
               key={index}
-              className="relative bg-gradient-to-br from-[#f8fafc] to-[#f1f5f9] rounded-2xl p-6 sm:p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
+              className={`relative bg-white border border-[#e5e7eb] rounded-2xl p-6 sm:p-8 hover:shadow-2xl hover:border-[#6366f1] transition-all duration-500 hover:-translate-y-2 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+              style={{ transitionDelay: `${index * 100}ms` }}
             >
               <div
                 className="text-[40px] sm:text-[48px] font-bold leading-[1] mb-4"

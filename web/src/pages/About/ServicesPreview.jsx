@@ -1,7 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ServiceCard from '../../components/ui/ServiceCard';
 
 const ServicesPreview = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const element = document.getElementById('services-preview');
+    if (element) observer.observe(element);
+
+    return () => observer.disconnect();
+  }, []);
+
   const services = [
     {
       icon: '/images/img_margin.svg',
@@ -26,10 +44,10 @@ const ServicesPreview = () => {
   ];
 
   return (
-    <section className="w-full bg-white py-[60px] sm:py-[80px] md:py-[100px]">
+    <section id="services-preview" className="w-full bg-white py-[60px] sm:py-[80px] md:py-[100px]">
       <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-12 sm:mb-16">
+        <div className={`text-center mb-12 sm:mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <h2
             className="text-[32px] sm:text-[40px] md:text-[48px] font-bold leading-[1.2] mb-4"
             style={{
@@ -59,6 +77,8 @@ const ServicesPreview = () => {
               title={service.title}
               description={service.description}
               onReadMore={() => {}}
+              isVisible={isVisible}
+              delay={index * 100}
             />
           ))}
         </div>
