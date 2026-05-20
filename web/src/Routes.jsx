@@ -11,6 +11,12 @@ import ServicesPage from './pages/Services';
 import ServiceDetail from './pages/Services/ServiceDetail';
 import TeamPage from './pages/Team';
 import ContactPage from './pages/Contact';
+import CartPage from './pages/Cart';
+import CheckoutPage from './pages/Checkout';
+import ToolsPage from './pages/Tools';
+import IpLocator from './pages/IpLocator';
+import IpGrabber from './pages/IpGrabber';
+import DnsLookup from './pages/DnsLookup';
 
 const AppRoutes = () => {
   return (
@@ -24,6 +30,12 @@ const AppRoutes = () => {
         
         {/* Shop Page */}
         <Route path="/shop" element={<ShopPage />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/tools" element={<ToolsPage />} />
+        <Route path="/tools/ip-locator" element={<IpLocator />} />
+        <Route path="/tools/ip-grabber" element={<IpGrabber />} />
+        <Route path="/tools/dns-lookup" element={<DnsLookup />} />
         
         {/* Courses Page */}
         <Route path="/courses" element={<CoursesPage />} />

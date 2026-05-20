@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import Button from '../../components/ui/Button';
 import Dropdown from '../../components/ui/Dropdown';
+import { addProductToCart } from '../../utils/cartUtils';
 
 const ProductGrid = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [isVisible, setIsVisible] = useState(false);
+
+  const handleAddToCart = (product) => {
+    addProductToCart(product);
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -250,7 +255,7 @@ const ProductGrid = () => {
                     layout_gap="0"
                     variant="primary"
                     size="sm"
-                    onClick={() => {}}
+                    onClick={() => handleAddToCart(product)}
                   />
                 </div>
               </div>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Button from '../../components/ui/Button';
 
 const CyberPlayground = () => {
@@ -27,6 +28,7 @@ const CyberPlayground = () => {
       title: 'IP Locator',
       description: 'Instantly identify geographic locations, ISP details, and network type for any IPv4 or IPv6 address worldwide.',
       buttonText: 'START TRACKING',
+      to: '/tools/ip-locator',
     },
     {
       id: 2,
@@ -34,6 +36,7 @@ const CyberPlayground = () => {
       title: 'IP Grabber',
       description: 'Generate unique tracking links to log visitor IP addresses, browser agents, and device information for security audits.',
       buttonText: 'GENERATE LINK',
+      to: '/tools/ip-grabber',
     }
   ];
 
@@ -62,8 +65,8 @@ const CyberPlayground = () => {
               Try our internal web tools for testing and exploration.
             </p>
           </div>
-          <a
-            href="#"
+          <Link
+            to="/tools"
             className="inline-flex items-center gap-2 px-6 py-3 text-[14px] sm:text-[16px] font-semibold text-[#6366f1] hover:text-[#8b5cf6] transition-colors duration-300 whitespace-nowrap"
             style={{ fontFamily: 'Inter' }}
           >
@@ -71,7 +74,7 @@ const CyberPlayground = () => {
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
-          </a>
+          </Link>
         </div>
 
         {/* Tools Grid */}
@@ -117,24 +120,25 @@ const CyberPlayground = () => {
               </div>
 
               {/* Action Button */}
-              <Button
-                text={tool?.buttonText}
-                text_font_size="14"
-                text_font_weight="600"
-                text_color="#ffffff"
-                fill_background_color="#6366f1"
-                border_border="none"
-                border_border_radius="8px"
-                padding="12px 32px"
-                layout_width="auto"
-                position="relative"
-                margin="0"
-                layout_gap="0"
-                variant="primary"
-                size="md"
-                onClick={() => {}}
-                className="self-start hover:shadow-lg hover:scale-105 transition-all duration-300"
-              />
+              <Link to={tool?.to} className="self-start">
+                <Button
+                  text={tool?.buttonText}
+                  text_font_size="14"
+                  text_font_weight="600"
+                  text_color="#ffffff"
+                  fill_background_color="#6366f1"
+                  border_border="none"
+                  border_border_radius="8px"
+                  padding="12px 32px"
+                  layout_width="auto"
+                  position="relative"
+                  margin="0"
+                  layout_gap="0"
+                  variant="primary"
+                  size="md"
+                  className="self-start hover:shadow-lg hover:scale-105 transition-all duration-300"
+                />
+              </Link>
             </div>
           ))}
         </div>
