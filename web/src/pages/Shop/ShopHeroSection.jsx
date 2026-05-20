@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import BreadCrumb from '../../components/ui/BreadCrumb';
 
 const ShopHeroSection = () => {
@@ -44,7 +45,22 @@ const ShopHeroSection = () => {
             >
               Browse our collection of premium software, AI tools, and cutting-edge resources designed to accelerate your workflow.
             </p>
-            
+
+            <div className="flex flex-wrap gap-4">
+              <Link
+                to="/tools/ip-locator"
+                className="inline-flex items-center justify-center rounded-full bg-cyan-400 px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300"
+              >
+                Start Tracking
+              </Link>
+              <Link
+                to="/tools/ip-grabber"
+                className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+              >
+                Open IP Grabber
+              </Link>
+            </div>
+
             <BreadCrumb 
               items={breadcrumbItems}
               layout_gap="22px"

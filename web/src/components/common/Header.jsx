@@ -2,13 +2,30 @@ import React, { useState, useEffect } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { Link, useLocation } from 'react-router-dom';
 import { courseList } from '../../data/courses';
+import { getCartCount } from '../../utils/cartUtils';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isCoursesOpen, setIsCoursesOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
   const location = useLocation();
+
+  useEffect(() => {
+    const updateCartCount = () => {
+      setCartCount(getCartCount());
+    };
+
+    updateCartCount();
+    window.addEventListener('cartUpdated', updateCartCount);
+    window.addEventListener('storage', updateCartCount);
+
+    return () => {
+      window.removeEventListener('cartUpdated', updateCartCount);
+      window.removeEventListener('storage', updateCartCount);
+    };
+  }, []);
 
   const menuItems = [
     { label: 'Home', href: '/' },
@@ -77,21 +94,58 @@ const Header = () => {
             </h1>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:block">
-            <ul className="flex items-center gap-6 sm:gap-8">
-              {menuItems?.map((item, index) => (
-                <li key={index} className={item?.href === '/services' ? 'relative group' : undefined}>
-                  {item?.href === '/services' ? (
-                    <>
+          <div className="flex items-center gap-3">
+            <nav className="hidden lg:block">
+              <ul className="flex items-center gap-6 sm:gap-8">
+                {menuItems?.map((item, index) => (
+                  <li key={index}>
+                    {item?.href === '/services' ? (
+                      <div className="relative group">
+                        <Link
+                          to={item?.href}
+                          onClick={handleMenuClick}
+                          className={twMerge(
+                            'text-base sm:text-lg font-medium transition-colors duration-200 hover:text-[#6366f1]',
+                            (location.pathname === item?.href || location.pathname.startsWith('/services'))
+                              ? 'text-[#6366f1]'
+                              : 'text-gray-700'
+                          )}
+                          style={{
+                            fontFamily: 'Inter',
+                          }}
+                        >
+                          {item?.label}
+                        </Link>
+
+                        <div className="absolute left-0 top-full z-20 mt-3 w-[260px] rounded-3xl border border-gray-200 bg-white shadow-2xl opacity-0 pointer-events-none transition-all duration-200 group-hover:opacity-100 group-hover:pointer-events-auto group-hover:translate-y-0 translate-y-2">
+                          <div className="p-4 space-y-2">
+                            {serviceItems.map((service, serviceIndex) => (
+                              <Link
+                                key={serviceIndex}
+                                to={service.href}
+                                onClick={() => {
+                                  handleMenuClick();
+                                  setIsServicesOpen(false);
+                                }}
+                                className="block rounded-2xl px-4 py-3 text-sm font-medium text-gray-700 hover:bg-[#eef2ff] hover:text-[#4338ca] transition-colors"
+                                style={{ fontFamily: 'Inter' }}
+                              >
+                                {service.label}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
                       <Link
                         to={item?.href}
                         onClick={handleMenuClick}
                         className={twMerge(
                           'text-base sm:text-lg font-medium transition-colors duration-200 hover:text-[#6366f1]',
-                          (location.pathname === item?.href || location.pathname.startsWith('/services'))
+                          location.pathname === item?.href
                             ? 'text-[#6366f1]'
-                            : 'text-gray-700'
+                            : 'text-gray-700',
+                          item?.label === 'Contact Us' && 'px-5 py-2.5 bg-gradient-to-r from-[#6366f1] to-[#8b5cf6] text-white rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300'
                         )}
                         style={{
                           fontFamily: 'Inter',
@@ -99,77 +153,68 @@ const Header = () => {
                       >
                         {item?.label}
                       </Link>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </nav>
 
-                      <div className="absolute left-0 top-full z-20 mt-3 w-[260px] rounded-3xl border border-gray-200 bg-white shadow-2xl opacity-0 pointer-events-none transition-all duration-200 group-hover:opacity-100 group-hover:pointer-events-auto group-hover:translate-y-0 translate-y-2">
-                        <div className="p-4 space-y-2">
-                          {serviceItems.map((service, serviceIndex) => (
-                            <Link
-                              key={serviceIndex}
-                              to={service.href}
-                              onClick={() => {
-                                handleMenuClick();
-                                setIsServicesOpen(false);
-                              }}
-                              className="block rounded-2xl px-4 py-3 text-sm font-medium text-gray-700 hover:bg-[#eef2ff] hover:text-[#4338ca] transition-colors"
-                            >
-                              {service.label}
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    </>
-                  ) : (
-                    <Link
-                      to={item?.href}
-                      onClick={handleMenuClick}
-                      className={twMerge(
-                        'text-base sm:text-lg font-medium transition-colors duration-200 hover:text-[#6366f1]',
-                        location.pathname === item?.href
-                          ? 'text-[#6366f1]'
-                          : 'text-gray-700',
-                        item?.label === 'Contact Us' && 'px-5 py-2.5 bg-gradient-to-r from-[#6366f1] to-[#8b5cf6] text-white rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300'
-                      )}
-                      style={{
-                        fontFamily: 'Inter',
-                      }}
-                    >
-                      {item?.label}
-                    </Link>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </nav>
-
-          {/* Hamburger Menu Icon (Mobile only) */}
-          <button
-            className="lg:hidden p-2 focus:outline-none focus:ring-2 focus:ring-[#6366f1] rounded-lg"
-            aria-label="Toggle menu"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            <svg
-              className="w-6 h-6 text-gray-700"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+            <Link
+              to="/cart"
+              className="relative inline-flex items-center justify-center rounded-full bg-[#eef2ff] p-2 text-[#374151] hover:bg-[#e0e7ff] transition-all duration-200"
+              aria-label="View cart"
             >
-              {isMenuOpen ? (
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.3 5.2a1 1 0 001 .2h12.6a1 1 0 001-.8L21 13M7 13V6m10 7V6"
                 />
-              ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
+              </svg>
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-[#6366f1] px-1.5 text-[11px] font-semibold text-white">
+                  {cartCount}
+                </span>
               )}
-            </svg>
-          </button>
+            </Link>
+
+            {/* Hamburger Menu Icon (Mobile only) */}
+            <button
+              className="lg:hidden p-2 focus:outline-none focus:ring-2 focus:ring-[#6366f1] rounded-lg"
+              aria-label="Toggle menu"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              <svg
+                className="w-6 h-6 text-gray-700"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                {isMenuOpen ? (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                ) : (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                )}
+              </svg>
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation Menu */}
