@@ -23,33 +23,18 @@ const HomeServices = () => {
   const services = [
     {
       icon: '/images/img_margin.svg',
-      title: 'AI Solutions',
-      description: 'Leverage artificial intelligence to automate processes and drive innovation.',
+      title: 'Clone App Development',
+      description: 'Build your own version of popular apps like Uber, Gojek, Netflix, OnlyFans, Dream11, Tinder, Zomato, and more customized for your brand.',
     },
     {
       icon: '/images/img_margin_blue_gray_300.svg',
-      title: 'Web Development',
-      description: 'Custom web applications built with modern frameworks for optimal performance.',
+      title: 'Logo & Branding Design',
+      description: 'Create a strong identity with professional logo design and complete brand kits.',
     },
     {
       icon: '/images/img_margin_blue_gray_300_44x36.svg',
-      title: 'Mobile Apps',
-      description: 'Native and cross-platform mobile applications for seamless experiences.',
-    },
-    {
-      icon: '/images/img_margin_blue_gray_300_44x44.svg',
-      title: 'Cybersecurity',
-      description: 'Comprehensive security solutions to protect your digital assets.',
-    },
-    {
-      icon: '/images/img_margin_blue_gray_300_44x40.svg',
-      title: 'Cloud Services',
-      description: 'Scalable cloud infrastructure and migration services for modern businesses.',
-    },
-    {
-      icon: '/images/img_margin_44x44.svg',
-      title: 'Data Analytics',
-      description: 'Transform raw data into actionable insights with advanced analytics.',
+      title: 'UI / UX Designing',
+      description: 'Modern, user-friendly interfaces for mobile apps and websites.',
     },
   ];
 

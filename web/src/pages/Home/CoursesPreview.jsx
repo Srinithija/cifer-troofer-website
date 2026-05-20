@@ -118,15 +118,6 @@ const CoursesPreview = () => {
                 </div>
               </div>
               <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-                <span
-                  className="text-[20px] sm:text-[24px] font-bold text-[#6366f1]"
-                  style={{
-                    fontFamily: 'Inter',
-                  }}
-                >  
-                  {course.price}
-                </span>
-
               </div>
             </div>
           ))}

@@ -5,8 +5,10 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import HomePage from './pages/Home';
 import ShopPage from './pages/Shop';
 import CoursesPage from './pages/Courses';
+import CourseDetail from './pages/Courses/CourseDetail';
 import AboutPage from './pages/About';
 import ServicesPage from './pages/Services';
+import ServiceDetail from './pages/Services/ServiceDetail';
 import TeamPage from './pages/Team';
 import ContactPage from './pages/Contact';
 
@@ -31,7 +33,13 @@ const AppRoutes = () => {
         
         {/* Services Page */}
         <Route path="/services" element={<ServicesPage />} />
-        
+
+        {/* Service Detail Page */}
+        <Route path="/services/:serviceId" element={<ServiceDetail />} />
+
+        {/* Course Detail Page */}
+        <Route path="/courses/:courseId" element={<CourseDetail />} />
+
         {/* Team Page */}
         <Route path="/team" element={<TeamPage />} />
         

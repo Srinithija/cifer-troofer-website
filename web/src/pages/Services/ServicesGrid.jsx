@@ -1,8 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ServiceCard from '../../components/ui/ServiceCard';
 
 const ServicesGrid = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const navigate = useNavigate();
+
+  // Service ID mapping
+  const serviceIdMap = {
+    'Clone App Development': 'clone-app-development',
+    'Logo & Branding Design': 'branding-design',
+    'UI / UX Designing': 'ui-ux-design',
+    'Website Development': 'website-development',
+    'E-Commerce Development': 'ecommerce-development',
+    'Custom App Development': 'custom-app-development',
+    'Online Marketing': 'online-marketing',
+    'AI Automation & Chatbot Solutions': 'ai-automation',
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -23,43 +37,43 @@ const ServicesGrid = () => {
   const services = [
     {
       icon: '/images/img_margin.svg',
-      title: 'AI & Operational Solutions',
-      description: 'Leverage artificial intelligence to automate processes and optimize operations for maximum efficiency.',
+      title: 'Clone App Development',
+      description: 'Build your own version of popular apps like Uber, Gojek, Netflix, OnlyFans, Dream11, Tinder, Zomato, and more customized for your brand.',
     },
     {
       icon: '/images/img_margin_blue_gray_300.svg',
-      title: 'Website Development',
-      description: 'Custom web applications built with modern frameworks for optimal performance and user experience.',
+      title: 'Logo & Branding Design',
+      description: 'Create a strong identity with professional logo design and complete brand kits.',
     },
     {
       icon: '/images/img_margin_blue_gray_300_44x36.svg',
-      title: 'Mobile App Development',
-      description: 'Native and cross-platform mobile applications that deliver seamless experiences across all devices.',
+      title: 'UI / UX Designing',
+      description: 'Modern, user-friendly interfaces for mobile apps and websites.',
     },
     {
       icon: '/images/img_margin_blue_gray_300_44x44.svg',
-      title: 'Cloud Solutions',
-      description: 'Scalable cloud infrastructure and migration services to modernize your business operations.',
+      title: 'Website Development',
+      description: 'SEO-friendly, responsive websites for any business.',
     },
     {
       icon: '/images/img_margin_blue_gray_300_44x40.svg',
-      title: 'Cybersecurity',
-      description: 'Comprehensive security solutions to protect your digital assets and ensure compliance.',
+      title: 'E-Commerce Development',
+      description: 'Launch an online store with payment gateway integration and mobile optimization.',
     },
     {
       icon: '/images/img_margin_44x44.svg',
-      title: 'Data Analytics',
-      description: 'Transform raw data into actionable insights with advanced analytics and visualization tools.',
+      title: 'Custom App Development',
+      description: 'Turn your unique ideas into powerful apps for iOS, Android, or web — fully custom-built to match your vision, brand, and business goals from start to finish.',
     },
     {
       icon: '/images/img_margin_blue_gray_300_44x30.svg',
-      title: 'UI/UX Design',
-      description: 'User-centered design that creates intuitive and engaging digital experiences.',
+      title: 'Online Marketing',
+      description: 'SEO, social media marketing, and ad campaigns to grow your business.',
     },
     {
       icon: '/images/img_margin_44x40.svg',
-      title: 'Digital Marketing',
-      description: 'Strategic marketing campaigns that drive traffic, engagement, and conversions.',
+      title: 'AI Automation & Chatbot Solutions',
+      description: 'AI automation and intelligent chatbots to work smarter, reduce manual tasks, and create exceptional customer experiences.',
     },
   ];
 
@@ -96,9 +110,10 @@ const ServicesGrid = () => {
               icon={service.icon}
               title={service.title}
               description={service.description}
-              onReadMore={() => {}}
+              onReadMore={() => navigate(`/services/${serviceIdMap[service.title]}`)}
               isVisible={isVisible}
               delay={index * 100}
+              showReadMore={true}
             />
           ))}
         </div>

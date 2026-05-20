@@ -23,23 +23,23 @@ const ServicesPreview = () => {
   const services = [
     {
       icon: '/images/img_margin.svg',
-      title: 'App Development',
-      description: 'Custom mobile and web applications built with cutting-edge technologies',
+      title: 'Clone App Development',
+      description: 'Build your own version of popular apps like Uber, Gojek, Netflix, OnlyFans, Dream11, Tinder, Zomato, and more customized for your brand.',
     },
     {
       icon: '/images/img_margin_blue_gray_300.svg',
-      title: 'Website Design',
-      description: 'Beautiful, responsive websites that convert visitors into customers',
+      title: 'Logo & Branding Design',
+      description: 'Create a strong identity with professional logo design and complete brand kits.',
     },
     {
       icon: '/images/img_margin_blue_gray_300_44x36.svg',
-      title: 'UI/UX Design',
-      description: 'User-centered design that creates intuitive and engaging experiences',
+      title: 'UI / UX Designing',
+      description: 'Modern, user-friendly interfaces for mobile apps and websites.',
     },
     {
       icon: '/images/img_margin_blue_gray_300_44x44.svg',
-      title: 'Branding & Marketing',
-      description: 'Strategic branding and digital marketing to grow your business',
+      title: 'Website Development',
+      description: 'SEO-friendly, responsive websites for any business.',
     },
   ];
 

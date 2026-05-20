@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { Link, useLocation } from 'react-router-dom';
+import { courseList } from '../../data/courses';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const [isCoursesOpen, setIsCoursesOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
 
@@ -17,6 +20,19 @@ const Header = () => {
     { label: 'Contact Us', href: '/contact' },
   ];
 
+  const serviceItems = [
+    { label: 'Clone App Development', href: '/services/clone-app-development' },
+    { label: 'Logo & Branding Design', href: '/services/branding-design' },
+    { label: 'UI / UX Designing', href: '/services/ui-ux-design' },
+    { label: 'Website Development', href: '/services/website-development' },
+    { label: 'E-Commerce Development', href: '/services/ecommerce-development' },
+    { label: 'Custom App Development', href: '/services/custom-app-development' },
+    { label: 'Online Marketing', href: '/services/online-marketing' },
+    { label: 'AI Automation & Chatbot Solutions', href: '/services/ai-automation' },
+  ];
+
+  const courseItems = courseList.map((c) => ({ label: c.title, href: `/courses/${c.slug}` }));
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -28,6 +44,7 @@ const Header = () => {
 
   const handleMenuClick = () => {
     setIsMenuOpen(false);
+    setIsServicesOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -64,23 +81,61 @@ const Header = () => {
           <nav className="hidden lg:block">
             <ul className="flex items-center gap-6 sm:gap-8">
               {menuItems?.map((item, index) => (
-                <li key={index}>
-                  <Link
-                    to={item?.href}
-                    onClick={handleMenuClick}
-                    className={twMerge(
-                      'text-base sm:text-lg font-medium transition-colors duration-200 hover:text-[#6366f1]',
-                      location.pathname === item?.href
-                        ? 'text-[#6366f1]'
-                        : 'text-gray-700',
-                      item?.label === 'Contact Us' && 'px-5 py-2.5 bg-gradient-to-r from-[#6366f1] to-[#8b5cf6] text-white rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300'
-                    )}
-                    style={{
-                      fontFamily: 'Inter',
-                    }}
-                  >
-                    {item?.label}
-                  </Link>
+                <li key={index} className={item?.href === '/services' ? 'relative group' : undefined}>
+                  {item?.href === '/services' ? (
+                    <>
+                      <Link
+                        to={item?.href}
+                        onClick={handleMenuClick}
+                        className={twMerge(
+                          'text-base sm:text-lg font-medium transition-colors duration-200 hover:text-[#6366f1]',
+                          (location.pathname === item?.href || location.pathname.startsWith('/services'))
+                            ? 'text-[#6366f1]'
+                            : 'text-gray-700'
+                        )}
+                        style={{
+                          fontFamily: 'Inter',
+                        }}
+                      >
+                        {item?.label}
+                      </Link>
+
+                      <div className="absolute left-0 top-full z-20 mt-3 w-[260px] rounded-3xl border border-gray-200 bg-white shadow-2xl opacity-0 pointer-events-none transition-all duration-200 group-hover:opacity-100 group-hover:pointer-events-auto group-hover:translate-y-0 translate-y-2">
+                        <div className="p-4 space-y-2">
+                          {serviceItems.map((service, serviceIndex) => (
+                            <Link
+                              key={serviceIndex}
+                              to={service.href}
+                              onClick={() => {
+                                handleMenuClick();
+                                setIsServicesOpen(false);
+                              }}
+                              className="block rounded-2xl px-4 py-3 text-sm font-medium text-gray-700 hover:bg-[#eef2ff] hover:text-[#4338ca] transition-colors"
+                            >
+                              {service.label}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <Link
+                      to={item?.href}
+                      onClick={handleMenuClick}
+                      className={twMerge(
+                        'text-base sm:text-lg font-medium transition-colors duration-200 hover:text-[#6366f1]',
+                        location.pathname === item?.href
+                          ? 'text-[#6366f1]'
+                          : 'text-gray-700',
+                        item?.label === 'Contact Us' && 'px-5 py-2.5 bg-gradient-to-r from-[#6366f1] to-[#8b5cf6] text-white rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300'
+                      )}
+                      style={{
+                        fontFamily: 'Inter',
+                      }}
+                    >
+                      {item?.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
@@ -121,30 +176,79 @@ const Header = () => {
         <nav
           className={twMerge(
             'lg:hidden overflow-hidden transition-all duration-300',
-            isMenuOpen ? 'max-h-96 pb-4' : 'max-h-0'
+            isMenuOpen ? 'max-h-[840px] pb-4' : 'max-h-0'
           )}
         >
           <ul className="flex flex-col gap-2 pt-2">
-            {menuItems?.map((item, index) => (
-              <li key={index}>
-                <Link
-                  to={item?.href}
-                  onClick={handleMenuClick}
-                  className={twMerge(
-                    'block py-3 px-4 rounded-lg text-base font-medium transition-colors duration-200',
-                    location.pathname === item?.href
-                      ? 'bg-gradient-to-r from-[#6366f1] to-[#8b5cf6] text-white'
-                      : 'text-gray-700 hover:bg-gray-100',
-                    item?.label === 'Contact Us' && 'bg-gradient-to-r from-[#6366f1] to-[#8b5cf6] text-white'
-                  )}
-                  style={{
-                    fontFamily: 'Inter',
-                  }}
-                >
-                  {item?.label}
-                </Link>
-              </li>
-            ))}
+            {menuItems?.map((item, index) => {
+              if (item?.href === '/services') {
+                return (
+                  <li key={index} className="space-y-1">
+                    <div className="flex items-center justify-between rounded-lg bg-[#f8fafc] px-4 py-3 text-base font-medium text-gray-800">
+                      <Link
+                        to={item.href}
+                        onClick={() => {
+                          handleMenuClick();
+                          setIsServicesOpen(false);
+                        }}
+                        className="flex-1"
+                        style={{ fontFamily: 'Inter' }}
+                      >
+                        {item.label}
+                      </Link>
+                      <button
+                        type="button"
+                        onClick={() => setIsServicesOpen((prev) => !prev)}
+                        className="text-gray-600 hover:text-[#6366f1] transition-colors"
+                        aria-label="Toggle service submenu"
+                      >
+                        {isServicesOpen ? '−' : '+'}
+                      </button>
+                    </div>
+                    {isServicesOpen && (
+                      <ul className="space-y-1 rounded-2xl border border-gray-200 bg-white p-2">
+                        {serviceItems.map((service, serviceIndex) => (
+                          <li key={serviceIndex}>
+                            <Link
+                              to={service.href}
+                              onClick={() => {
+                                handleMenuClick();
+                                setIsServicesOpen(false);
+                              }}
+                              className="block rounded-xl px-4 py-3 text-sm font-medium text-gray-700 hover:bg-[#eef2ff] hover:text-[#4338ca] transition-colors"
+                              style={{ fontFamily: 'Inter' }}
+                            >
+                              {service.label}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                );
+              }
+
+              return (
+                <li key={index}>
+                  <Link
+                    to={item?.href}
+                    onClick={handleMenuClick}
+                    className={twMerge(
+                      'block py-3 px-4 rounded-lg text-base font-medium transition-colors duration-200',
+                      location.pathname === item?.href
+                        ? 'bg-gradient-to-r from-[#6366f1] to-[#8b5cf6] text-white'
+                        : 'text-gray-700 hover:bg-gray-100',
+                      item?.label === 'Contact Us' && 'bg-gradient-to-r from-[#6366f1] to-[#8b5cf6] text-white'
+                    )}
+                    style={{
+                      fontFamily: 'Inter',
+                    }}
+                  >
+                    {item?.label}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </nav>
       </div>
