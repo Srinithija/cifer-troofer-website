@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Button from '../../components/ui/Button';
+import { useNavigate } from 'react-router-dom';
+
 
 const ContactHero = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsVisible(true);
@@ -55,7 +58,7 @@ const ContactHero = () => {
               layout_gap="0"
               variant="primary"
               size="medium"
-              onClick={() => {}}
+              onClick={() => navigate('/courses')}
               className="hover:shadow-2xl hover:scale-105 transition-all duration-300"
             />
             <Button
@@ -76,7 +79,7 @@ const ContactHero = () => {
               layout_gap="0"
               variant="outline"
               size="medium"
-              onClick={() => {}}
+              onClick={() => navigate('/services')}
               className="hover:bg-white/10 transition-all duration-300"
             />
           </div>
