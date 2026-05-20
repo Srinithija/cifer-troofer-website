@@ -183,6 +183,59 @@ export default {
         'thin': 'var(--border-width-thin)',
         'medium': 'var(--border-width-medium)',
       },
+
+      /* ========== Animation Extensions ========== */
+      animation: {
+        'float': 'float 6s ease-in-out infinite',
+        'fade-in': 'fadeIn 0.6s ease-in-out forwards',
+        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+        'fade-in-down': 'fadeInDown 0.8s ease-out forwards',
+        'slide-in-up': 'slideInUp 0.8s ease-out forwards',
+        'slide-in-down': 'slideInDown 0.8s ease-out forwards',
+        'slide-in-left': 'slideInLeft 0.8s ease-out forwards',
+        'slide-in-right': 'slideInRight 0.8s ease-out forwards',
+        'scale-in': 'scaleIn 0.6s ease-out forwards',
+      },
+
+      /* ========== Keyframes Extensions ========== */
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-12px)' },
+        },
+        fadeIn: {
+          from: { opacity: '0' },
+          to: { opacity: '1' },
+        },
+        fadeInUp: {
+          from: { opacity: '0', transform: 'translateY(20px)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
+        },
+        fadeInDown: {
+          from: { opacity: '0', transform: 'translateY(-20px)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
+        },
+        slideInUp: {
+          from: { opacity: '0', transform: 'translateY(40px)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
+        },
+        slideInDown: {
+          from: { opacity: '0', transform: 'translateY(-40px)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
+        },
+        slideInLeft: {
+          from: { opacity: '0', transform: 'translateX(-40px)' },
+          to: { opacity: '1', transform: 'translateX(0)' },
+        },
+        slideInRight: {
+          from: { opacity: '0', transform: 'translateX(40px)' },
+          to: { opacity: '1', transform: 'translateX(0)' },
+        },
+        scaleIn: {
+          from: { opacity: '0', transform: 'scale(0.95)' },
+          to: { opacity: '1', transform: 'scale(1)' },
+        },
+      },
     },
   },
   plugins: [],

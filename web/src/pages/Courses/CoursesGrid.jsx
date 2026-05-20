@@ -1,128 +1,144 @@
-import React from 'react';
-import Button from '../../components/ui/Button';
+import React, { useState, useEffect } from 'react';
 
 const CoursesGrid = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const element = document.getElementById('courses-grid');
+    if (element) observer.observe(element);
+
+    return () => observer.disconnect();
+  }, []);
+
   const courses = [
     {
       id: 1,
       title: 'Ethical Hacking',
-      description: 'Ethical Hacking, is known as penetration testing or white-hat Hacking, is the practice of intentionally probing computer systems,networks',
+      description: 'Ethical Hacking, is known as penetration testing or white-hat Hacking, is the practice of intentionally probing computer systems and networks.',
       bgColor: '#e8f5e9',
-      cardBg: '#e5e5e5',
     },
     {
       id: 2,
-      title: 'Adv.Ethical Hacking',
-      description: 'Advanced ethical Hacking, is known as advanced penetration testing or red teaming, takes the principles and techniques of ethical Hacking to the complexity',
+      title: 'Adv. Ethical Hacking',
+      description: 'Advanced ethical Hacking, is known as advanced penetration testing or red teaming, takes the principles and techniques to the next level.',
       bgColor: '#fce4ec',
-      cardBg: '#e5e5e5',
     },
     {
       id: 3,
       title: 'Hardware Hacking',
-      description: 'Hardware Hacking, is known as hardware security research or hardware reverse engineering, is the process of exploring and manipulating electronic devices',
+      description: 'Hardware Hacking, is known as hardware security research or hardware reverse engineering, is the process of exploring electronic devices.',
       bgColor: '#fce4ec',
-      cardBg: '#e5e5e5',
     },
     {
       id: 4,
       title: 'PCB Design',
-      description: 'PCB  design is the process of creating a physical layout of an electronic circuit on a board that provides a platform for connecting components',
+      description: 'PCB design is the process of creating a physical layout of an electronic circuit on a board that provides a platform.',
       bgColor: '#fce4ec',
-      cardBg: '#e5e5e5',
     },
     {
       id: 5,
       title: 'Arduino',
-      description: 'Arduino is an open-source electronics platform that consists of both hardware and software components, designed to make it easy for anyone to create interactive and programmablepro',
+      description: 'Arduino is an open-source electronics platform that consists of both hardware and software components, designed for everyone.',
       bgColor: '#e8f5e9',
-      cardBg: '#e5e5e5',
     },
     {
       id: 6,
       title: 'Python',
-      description: 'Python is a popular computer programming language used to create software and websites, automate processes, and analyse data. Python is a general language,',
+      description: 'Python is a popular computer programming language used to create software and websites, automate processes, and analyse data.',
       bgColor: '#e8f5e9',
-      cardBg: '#e5e5e5',
     },
     {
       id: 7,
       title: 'Java',
-      description: 'Java is a high-level, object-oriented programming language that is designed to be platform-independent and can run on various operating systems without the need for ecompilation.',
+      description: 'Java is a high-level, object-oriented programming language that is designed to be platform-independent.',
       bgColor: '#e8f5e9',
-      cardBg: '#e5e5e5',
     },
     {
       id: 8,
       title: 'C Programming',
-      description: 'C programming is a versatile and influential programming language that is widely used in system-level programming, software development, and embedded devices..',
+      description: 'C programming is a versatile and influential programming language that is widely used in system-level programming.',
       bgColor: '#e8f5e9',
-      cardBg: '#e5e5e5',
     },
     {
       id: 9,
       title: 'Data Structures',
-      description: 'Data structures, which act as ordered containers or arrangements for effectively storing and organizing data, are important elements of computer science and programming.',
+      description: 'Data structures, which act as ordered containers, are important elements of computer science and programming.',
       bgColor: '#e8f5e9',
-      cardBg: '#e5e5e5',
     },
     {
       id: 10,
       title: 'Bash Scripting',
-      description: 'Bash scripting is the process of writing and running scripts using the Bash command-line interpreter, a sophisticated and commonly used Unix shell.',
+      description: 'Bash scripting is the process of writing and running scripts using the Bash command-line interpreter.',
       bgColor: '#e8f5e9',
-      cardBg: '#e5e5e5',
     },
     {
       id: 11,
-      title: 'FULLSTACK DEVELOPMENT',
-      description: 'Full-stack website development is the process of designing, constructing, and maintaining a website or online platforms',
+      title: 'Full-Stack Development',
+      description: 'Full-stack website development is the process of designing, constructing, and maintaining websites.',
       bgColor: '#e8f5e9',
-      cardBg: '#e5e5e5',
     },
     {
       id: 12,
-      title: 'RED TEAM FIELD BUNDLE',
-      description: "Red Team Field Course at Cifer Trooper, From Ethical Hacking and Advanced Hacking Techniques to Hardware Hacking, Arduino Mastery, and PCB Designing, this all-in-one course equips",
+      title: 'Red Team Field Bundle',
+      description: 'From Ethical Hacking and Advanced Hacking Techniques to Hardware Hacking and PCB Designing.',
       bgColor: '#e8f5e9',
-      cardBg: '#e5e5e5',
     },
   ];
 
   return (
-    <section className="w-full py-[28px] sm:py-[36px] md:py-[42px]">
+    <section id="courses-grid" className="w-full bg-white py-[60px] sm:py-[80px] md:py-[100px]">
       <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Title */}
-        <h2
-          className="text-[24px] sm:text-[28px] md:text-[32px] font-normal leading-[1.22] text-center mb-[30px] sm:mb-[40px] md:mb-[50px]"
-          style={{
-            fontFamily: 'Inter',
-            color: '#000000',
-          }}
-        >
-          What We Offer
-        </h2>
+        <div className={`text-center mb-12 sm:mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <h2
+            className="text-[32px] sm:text-[40px] md:text-[48px] font-bold leading-[1.2] mb-4"
+            style={{
+              fontFamily: 'Inter',
+              color: '#1f2937',
+            }}
+          >
+            What We Offer
+          </h2>
+          <p
+            className="text-[16px] sm:text-[18px] md:text-[20px] font-normal leading-[1.6] max-w-[700px] mx-auto"
+            style={{
+              fontFamily: 'Inter',
+              color: '#6b7280',
+            }}
+          >
+            Industry-leading courses designed to help you master in-demand skills
+          </p>
+        </div>
 
         {/* Courses Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 md:gap-6 ml-0 sm:ml-[26px] md:ml-[52px]">
-          {courses?.map((course) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8">
+          {courses?.map((course, index) => (
             <div
               key={course?.id}
-              className="flex flex-col gap-2 border border-[#000000] border-none rounded-xl p-[10px] sm:p-[15px] md:p-[20px]"
-              style={{ backgroundColor: course?.cardBg }}
+              className={`bg-white border border-[#e5e7eb] rounded-2xl p-6 sm:p-8 hover:shadow-2xl hover:border-[#6366f1] transition-all duration-500 hover:-translate-y-2 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+              style={{ transitionDelay: `${index * 100}ms` }}
             >
-              {/* Icon */}
+              {/* Icon Container */}
               <div
-                className="w-[44px] h-[44px] rounded-xl"
+                className="w-14 h-14 rounded-xl mb-4 group-hover:scale-110 transition-transform duration-300"
                 style={{ backgroundColor: course?.bgColor }}
               />
 
               {/* Title */}
               <h3
-                className="text-[16px] sm:text-[17px] md:text-[18px] font-semibold leading-[1.22] mt-[4px]"
+                className="text-[18px] sm:text-[20px] md:text-[22px] font-semibold leading-[1.3] mb-3 transition-colors duration-300"
                 style={{
                   fontFamily: 'Inter',
-                  color: '#111111',
+                  color: '#1f2937',
                 }}
               >
                 {course?.title}
@@ -130,37 +146,26 @@ const CoursesGrid = () => {
 
               {/* Description */}
               <p
-                className="text-[14px] sm:text-[15px] md:text-[16px] font-normal leading-[1.19] w-[92%] sm:w-[96%] md:w-[100%] mb-[4px] sm:mb-[8px] md:mb-[12px]"
+                className="text-[14px] sm:text-[15px] md:text-[16px] font-normal leading-[1.6] mb-6"
                 style={{
                   fontFamily: 'Inter',
-                  color: '#000000',
+                  color: '#6b7280',
                 }}
               >
                 {course?.description}
               </p>
 
-              {/* Button */}
-              <Button
-                text="Learn more →"
-                text_font_size="16"
-                text_font_family="Inter"
-                text_font_weight="400"
-                text_line_height="20px"
-                text_text_align="left"
-                text_color="#ffffff"
-                fill_background_color="#ff5722ab"
-                border_border_radius="4px"
-                border_border="none"
-                layout_width="auto"
-                position="relative"
-                margin="0px"
-                layout_gap="0px"
-                variant="primary"
-                size="medium"
-                padding="2px 12px 2px 22px"
-                className="mb-[4px]"
-                onClick={() => {}}
-              />
+              {/* Learn More Button */}
+              <a
+                href="#"
+                className="inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-[#6366f1] to-[#8b5cf6] text-white font-medium rounded-lg hover:shadow-lg hover:scale-105 transition-all duration-300"
+                style={{ fontFamily: 'Inter', fontSize: '14px' }}
+              >
+                Learn more
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </a>
             </div>
           ))}
         </div>

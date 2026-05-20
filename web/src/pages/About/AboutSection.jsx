@@ -1,23 +1,41 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const AboutSection = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const element = document.getElementById('about-section');
+    if (element) observer.observe(element);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="w-full bg-gradient-to-br from-[#f8fafc] to-[#f1f5f9] py-[60px] sm:py-[80px] md:py-[100px]">
+    <section id="about-section" className="w-full bg-gradient-to-br from-[#f8fafc] to-[#f1f5f9] py-[60px] sm:py-[80px] md:py-[100px]">
       <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
           {/* Left Image */}
-          <div className="flex-1 w-full">
-            <div className="w-full aspect-[4/3] bg-gradient-to-br from-[#6366f1] to-[#8b5cf6] rounded-2xl flex items-center justify-center">
+          <div className={`flex-1 w-full transition-all duration-1000 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
+            <div className="w-full aspect-[4/3] bg-gradient-to-br from-[#6366f1] to-[#8b5cf6] rounded-3xl flex items-center justify-center hover:shadow-2xl transition-all duration-300 border border-white/20">
               <img
                 src="/images/img_img.svg"
                 alt="About Cifer Troofer"
-                className="w-3/4 h-3/4 object-contain"
+                className="w-3/4 h-3/4 object-contain animate-float"
               />
             </div>
           </div>
 
           {/* Right Content */}
-          <div className="flex-1 w-full">
+          <div className={`flex-1 w-full transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
             <h2
               className="text-[32px] sm:text-[40px] md:text-[48px] font-bold leading-[1.2] mb-6"
               style={{

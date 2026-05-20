@@ -1,6 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import Button from '../../components/ui/Button';
 
 const ContactInfo = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const element = document.getElementById('contact-info');
+    if (element) observer.observe(element);
+
+    return () => observer.disconnect();
+  }, []);
+
   const contactDetails = [
     {
       icon: '/images/img_material_symbols_mail_outline.svg',
@@ -23,11 +42,11 @@ const ContactInfo = () => {
   ];
 
   return (
-    <section className="w-full bg-white py-[60px] sm:py-[80px] md:py-[100px]">
+    <section id="contact-info" className="w-full bg-white py-[60px] sm:py-[80px] md:py-[100px]">
       <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
           {/* Left Content */}
-          <div className="flex-1 w-full">
+          <div className={`flex-1 w-full transition-all duration-1000 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
             <h2
               className="text-[32px] sm:text-[40px] md:text-[48px] font-bold leading-[1.2] mb-6"
               style={{
@@ -51,7 +70,7 @@ const ContactInfo = () => {
             <div className="space-y-6">
               {contactDetails.map((detail, index) => (
                 <div key={index} className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-[#6366f1] to-[#8b5cf6] rounded-xl flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-gradient-to-br from-[#6366f1] to-[#8b5cf6] rounded-xl flex items-center justify-center flex-shrink-0 hover:scale-110 transition-transform duration-300">
                     <img
                       src={detail.icon}
                       alt={detail.label}
@@ -85,8 +104,8 @@ const ContactInfo = () => {
           </div>
 
           {/* Right - Contact Form */}
-          <div className="flex-1 w-full">
-            <div className="bg-gradient-to-br from-[#f8fafc] to-[#f1f5f9] rounded-2xl p-6 sm:p-8 md:p-10">
+          <div className={`flex-1 w-full transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
+            <div className="bg-gradient-to-br from-[#f8fafc] to-[#f1f5f9] rounded-2xl p-6 sm:p-8 md:p-10 hover:shadow-lg transition-all duration-300">
               <form className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
@@ -182,9 +201,9 @@ const ContactInfo = () => {
                   text_text_align="center"
                   text_color="#ffffff"
                   fill_background_color="#6366f1"
-                  border_border_radius="8px"
+                  border_border_radius="12px"
                   border_border="none"
-                  padding="14px 32px"
+                  padding="16px 40px"
                   layout_width="full"
                   position="relative"
                   margin="0"
@@ -192,7 +211,7 @@ const ContactInfo = () => {
                   variant="primary"
                   size="medium"
                   onClick={() => {}}
-                  className="hover:shadow-lg hover:scale-105 transition-all duration-300"
+                  className="hover:shadow-lg hover:scale-105 transition-all duration-300 w-full"
                 />
               </form>
             </div>
