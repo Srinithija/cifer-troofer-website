@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "@dhiwise/component-tagger": "^1.0.15",
+    "@supabase/supabase-js": "^2.106.1",
     "@tailwindcss/typography": "^0.5.16",
     "class-variance-authority": "^0.7.1",
     "prop-types": "^15.8.1",

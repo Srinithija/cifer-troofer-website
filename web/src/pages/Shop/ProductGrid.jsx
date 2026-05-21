@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import Button from '../../components/ui/Button';
 import Dropdown from '../../components/ui/Dropdown';
-import { addProductToCart } from '../../utils/cartUtils';
+import { addProductToCart, syncCartItemToDb } from '../../utils/cartUtils';
 
 const ProductGrid = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [isVisible, setIsVisible] = useState(false);
 
   const handleAddToCart = (product) => {
-    addProductToCart(product);
+    const items = addProductToCart(product);
+    // attempt to sync new cart item to Supabase (fire-and-forget)
+    try {
+      syncCartItemToDb(product).catch(() => {});
+    } catch (err) {
+      // ignore
+    }
+    return items;
   };
 
   useEffect(() => {

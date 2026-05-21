@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Button from '../../components/ui/Button';
+import supabase from '../../utils/supabaseClient';
 
 const ContactInfo = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -106,114 +107,7 @@ const ContactInfo = () => {
           {/* Right - Contact Form */}
           <div className={`flex-1 w-full transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
             <div className="bg-gradient-to-br from-[#f8fafc] to-[#f1f5f9] rounded-2xl p-6 sm:p-8 md:p-10 hover:shadow-lg transition-all duration-300">
-              <form className="space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div>
-                    <label
-                      className="block text-[14px] sm:text-[16px] font-semibold leading-[1.3] mb-2"
-                      style={{
-                        fontFamily: 'Inter',
-                        color: '#1f2937',
-                      }}
-                    >
-                      First Name
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="John"
-                      className="w-full px-4 py-3 bg-white border border-solid border-[#e5e7eb] rounded-xl focus:outline-none focus:border-[#6366f1] focus:ring-2 focus:ring-[#6366f1]/20 transition-all duration-200"
-                      style={{
-                        fontFamily: 'Inter',
-                        color: '#1f2937',
-                      }}
-                    />
-                  </div>
-                  <div>
-                    <label
-                      className="block text-[14px] sm:text-[16px] font-semibold leading-[1.3] mb-2"
-                      style={{
-                        fontFamily: 'Inter',
-                        color: '#1f2937',
-                      }}
-                    >
-                      Last Name
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Doe"
-                      className="w-full px-4 py-3 bg-white border border-solid border-[#e5e7eb] rounded-xl focus:outline-none focus:border-[#6366f1] focus:ring-2 focus:ring-[#6366f1]/20 transition-all duration-200"
-                      style={{
-                        fontFamily: 'Inter',
-                        color: '#1f2937',
-                      }}
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label
-                    className="block text-[14px] sm:text-[16px] font-semibold leading-[1.3] mb-2"
-                    style={{
-                      fontFamily: 'Inter',
-                      color: '#1f2937',
-                    }}
-                  >
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    placeholder="john@example.com"
-                    className="w-full px-4 py-3 bg-white border border-solid border-[#e5e7eb] rounded-xl focus:outline-none focus:border-[#6366f1] focus:ring-2 focus:ring-[#6366f1]/20 transition-all duration-200"
-                    style={{
-                      fontFamily: 'Inter',
-                      color: '#1f2937',
-                    }}
-                  />
-                </div>
-
-                <div>
-                  <label
-                    className="block text-[14px] sm:text-[16px] font-semibold leading-[1.3] mb-2"
-                    style={{
-                      fontFamily: 'Inter',
-                      color: '#1f2937',
-                    }}
-                  >
-                    Message
-                  </label>
-                  <textarea
-                    rows="5"
-                    placeholder="Tell us about your project..."
-                    className="w-full px-4 py-3 bg-white border border-solid border-[#e5e7eb] rounded-xl focus:outline-none focus:border-[#6366f1] focus:ring-2 focus:ring-[#6366f1]/20 transition-all duration-200 resize-none"
-                    style={{
-                      fontFamily: 'Inter',
-                      color: '#1f2937',
-                    }}
-                  />
-                </div>
-
-                <Button
-                  text="Send Message"
-                  text_font_size="16"
-                  text_font_family="Inter"
-                  text_font_weight="600"
-                  text_line_height="20px"
-                  text_text_align="center"
-                  text_color="#ffffff"
-                  fill_background_color="#6366f1"
-                  border_border_radius="12px"
-                  border_border="none"
-                  padding="16px 40px"
-                  layout_width="full"
-                  position="relative"
-                  margin="0"
-                  layout_gap="0"
-                  variant="primary"
-                  size="medium"
-                  onClick={() => {}}
-                  className="hover:shadow-lg hover:scale-105 transition-all duration-300 w-full"
-                />
-              </form>
+              <ContactForm />
             </div>
           </div>
         </div>
@@ -223,3 +117,94 @@ const ContactInfo = () => {
 };
 
 export default ContactInfo;
+
+const ContactForm = () => {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState('');
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    setSuccess('');
+    try {
+      const name = `${firstName} ${lastName}`.trim();
+      const { error: supaError } = await supabase.from('contacts').insert([{ name, email, message }]);
+      if (supaError) throw supaError;
+      setSuccess('Message sent — thank you!');
+      setFirstName('');
+      setLastName('');
+      setEmail('');
+      setMessage('');
+    } catch (err) {
+      console.error('Contact insert error:', err);
+      setError(err?.message || JSON.stringify(err) || 'Something went wrong');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <form className="space-y-6" onSubmit={handleSubmit}>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div>
+          <label className="block text-sm font-semibold mb-2">First Name</label>
+          <input
+            type="text"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            className="w-full px-3 py-2 border rounded"
+            placeholder="John"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-semibold mb-2">Last Name</label>
+          <input
+            type="text"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            className="w-full px-3 py-2 border rounded"
+            placeholder="Doe"
+          />
+        </div>
+      </div>
+      <div>
+        <label className="block text-sm font-semibold mb-2">Email</label>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-full px-3 py-2 border rounded"
+          placeholder="john@example.com"
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-semibold mb-2">Message</label>
+        <textarea
+          rows={4}
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          className="w-full px-3 py-2 border rounded"
+          placeholder="Tell us about your project..."
+        />
+      </div>
+
+      {success && <p className="text-green-600">{success}</p>}
+      {error && <p className="text-red-600">{error}</p>}
+
+      <button
+        type="submit"
+        disabled={loading}
+        className="w-full bg-[#6366f1] text-white py-3 rounded-lg font-semibold"
+      >
+        {loading ? 'Sending...' : 'Send Message'}
+      </button>
+    </form>
+  );
+};
+

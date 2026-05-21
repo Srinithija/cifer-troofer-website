@@ -10,6 +10,7 @@ import {
   saveCartItems,
   updateCartItemQuantity,
 } from '../../utils/cartUtils';
+import supabase from '../../utils/supabaseClient';
 
 const CheckoutPage = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -88,10 +89,72 @@ const CheckoutPage = () => {
     }
 
     setIsSubmitting(true);
-    window.setTimeout(() => {
-      setIsSubmitting(false);
-      setOrderPlaced(true);
-    }, 600);
+
+    (async () => {
+      try {
+        // Build order payload
+        const billingAddress = {
+          address: billingInfo.address,
+          city: billingInfo.city,
+          postalCode: billingInfo.postalCode,
+          country: billingInfo.country,
+        };
+
+        // generate order_number from timestamp + random suffix
+        const orderNumber = `ORD-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
+
+        const orderPayload = {
+          order_number: orderNumber,
+          customer_name: billingInfo.fullName,
+          customer_email: billingInfo.email,
+          customer_phone: billingInfo.phone || null,
+          billing_address: billingAddress,
+          subtotal: subtotal,
+          tax: tax,
+          total: total,
+          currency: 'USD',
+          metadata: { items_count: cartItems.length },
+        };
+
+        // generate client-side UUID for order so we can reference it even if DB doesn't return rows
+        const orderId = typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : null;
+        if (orderId) orderPayload.id = orderId;
+
+        // insert order (no select to avoid requiring SELECT permissions)
+        const { data: orderInsertData, error: orderError } = await supabase.from('orders').insert([orderPayload]);
+        if (orderError) throw orderError;
+
+        // ensure we have orderId (if DB generated id and client couldn't generate one, try to read it back by order_number if available)
+        // but we set id client-side above so we should have it
+
+        // prepare order items
+        const itemsPayload = cartItems.map((item) => ({
+          order_id: orderId,
+          product_id: item.id,
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+          line_total: Number((item.price * item.quantity).toFixed(2)),
+          metadata: { image: item.image },
+        }));
+
+        if (itemsPayload.length > 0) {
+          const { data: itemsData, error: itemsError } = await supabase.from('order_items').insert(itemsPayload);
+          if (itemsError) throw itemsError;
+        }
+
+        // success: clear local cart and show confirmation
+        saveCartItems([]);
+        setCartItems([]);
+        setOrderPlaced(true);
+      } catch (err) {
+        console.error('Order save error:', err);
+        const errMsg = err?.message || (typeof err === 'string' ? err : JSON.stringify(err));
+        setFormError(`Order save error: ${errMsg}`);
+      } finally {
+        setIsSubmitting(false);
+      }
+    })();
   };
 
   return (
@@ -233,6 +296,54 @@ const CheckoutPage = () => {
                         className="w-full rounded-2xl border border-[#d1d5db] bg-[#f8fafc] px-4 py-3 text-sm text-[#111827] outline-none transition focus:border-[#6366f1] focus:ring-2 focus:ring-[#c7d2fe]"
                       />
                     </label>
+
+                    {/* Totals included in the billing form (read-only so they submit with form) */}
+                    <div className="grid gap-4 sm:grid-cols-3">
+                      <label className="space-y-2 text-sm text-[#4b5563]" style={{ fontFamily: 'Inter' }}>
+                        Subtotal
+                        <input
+                          type="text"
+                          name="subtotal"
+                          value={subtotal}
+                          readOnly
+                          className="w-full rounded-2xl border border-[#d1d5db] bg-white px-4 py-3 text-sm text-[#111827] outline-none"
+                        />
+                      </label>
+                      <label className="space-y-2 text-sm text-[#4b5563]" style={{ fontFamily: 'Inter' }}>
+                        Tax (8%)
+                        <input
+                          type="text"
+                          name="tax"
+                          value={tax}
+                          readOnly
+                          className="w-full rounded-2xl border border-[#d1d5db] bg-white px-4 py-3 text-sm text-[#111827] outline-none"
+                        />
+                      </label>
+                      <label className="space-y-2 text-sm text-[#4b5563]" style={{ fontFamily: 'Inter' }}>
+                        Total
+                        <input
+                          type="text"
+                          name="total"
+                          value={total}
+                          readOnly
+                          className="w-full rounded-2xl border border-[#d1d5db] bg-white px-4 py-3 text-sm text-[#111827] outline-none font-semibold"
+                        />
+                      </label>
+                    </div>
+
+                    {/* Products list included in form (visible summary + hidden JSON payload) */}
+                    <div className="mt-4">
+                      <label className="block text-sm font-semibold text-[#4b5563] mb-2" style={{ fontFamily: 'Inter' }}>
+                        Products in order
+                      </label>
+                      <textarea
+                        readOnly
+                        value={cartItems.map(i => `${i.quantity} × ${i.name} — ${formatCurrency(i.price * i.quantity)}`).join('\n')}
+                        className="w-full rounded-2xl border border-[#d1d5db] bg-white px-4 py-3 text-sm text-[#111827] outline-none resize-none h-28"
+                      />
+                      {/* Hidden JSON payload for server / DB use */}
+                      <input type="hidden" name="items" value={JSON.stringify(cartItems)} />
+                    </div>
 
                     {formError && (
                       <p className="text-sm font-medium text-[#dc2626]" style={{ fontFamily: 'Inter' }}>

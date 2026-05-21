@@ -65,6 +65,34 @@ export const addProductToCart = (product) => {
   return items;
 };
 
+export const syncCartItemToDb = async (product, sessionId = null) => {
+  try {
+    // Lazy import supabase to avoid breaking SSR or environments without window
+    const mod = await import('./supabaseClient').catch(() => ({}));
+    const supabase = mod.supabase || mod.default || null;
+    if (!supabase) return;
+
+    // Only set product_id when it's a valid UUID string (to match DB schema)
+    const isUuid = (val) => typeof val === 'string' && /^[0-9a-fA-F-]{36}$/.test(val);
+    const productId = isUuid(product.id) ? product.id : null;
+
+    const payload = {
+      product_id: productId,
+      name: product.name || product.title || null,
+      price: typeof product.price === 'number' ? product.price : parsePrice(product.price),
+      quantity: 1,
+      metadata: { image: product.image || null, sessionId, original_id: product.id ?? null },
+    };
+
+    const { data, error } = await supabase.from('cart_items').insert([payload]);
+    if (error) console.warn('Sync cart item to DB failed', error);
+    return data;
+  } catch (err) {
+    console.error('syncCartItemToDb error', err);
+    return null;
+  }
+};
+
 export const updateCartItemQuantity = (itemId, quantity) => {
   const items = getCartItems();
   const nextItems = items

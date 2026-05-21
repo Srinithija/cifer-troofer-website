@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 import Header from '../../components/common/Header';
 import Footer from '../../components/common/Footer';
 import { courseDetails } from '../../data/courses';
+import supabase from '../../utils/supabaseClient';
 
 const CourseDetail = () => {
   const { courseId } = useParams();
@@ -17,6 +18,7 @@ const CourseDetail = () => {
     phone: '',
     message: '',
   });
+  const [formError, setFormError] = useState('');
   const enrollRef = useRef(null);
 
   const revealEnrollForm = () => {
@@ -53,9 +55,25 @@ const CourseDetail = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleEnroll = (event) => {
+  const handleEnroll = async (event) => {
     event.preventDefault();
-    setSubmitted(true);
+    try {
+      const payload = {
+        course_id: course.id,
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        message: formData.message,
+        metadata: { course_slug: course.slug || course.title || null },
+      };
+      const { data, error } = await supabase.from('enrollments').insert([payload]);
+      if (error) throw error;
+      setFormError('');
+      setSubmitted(true);
+    } catch (err) {
+      console.error('Enrollment error:', err);
+      setFormError(err?.message || 'Could not save enrollment to database.');
+    }
   };
 
   return (
@@ -244,6 +262,11 @@ const CourseDetail = () => {
                   </div>
                 ) : (
                   <form onSubmit={handleEnroll} className="grid gap-6 md:grid-cols-2">
+                    {formError && (
+                      <div className="md:col-span-2">
+                        <p className="text-sm font-medium text-[#dc2626]" style={{ fontFamily: 'Inter' }}>{formError}</p>
+                      </div>
+                    )}
                     <input
                       type="text"
                       name="name"
