@@ -1,102 +1,144 @@
-# React + Vite + Tailwind CSS Project
+# Cyber Security Shop & Learning Platform
 
-A modern React-based project utilizing the latest frontend technologies and tools for building responsive web applications.
+This is a React + Vite + Tailwind CSS frontend for a cybersecurity shop and learning platform. The app includes shop pages, course enrollment, contact form submission, and Supabase-backed persistence for contacts, enrollments, orders, and cart data.
 
-## 🚀 Features
+## 🚀 Key Features
 
-- **React 18** - React version with improved rendering and concurrent features
-- **Vite** - Lightning-fast build tool and development server
-- **TailwindCSS** - Utility-first CSS framework with extensive customization
-- **React Router** - Declarative routing for React applications
-
-## 📋 Prerequisites
-
-- Node.js (v14.x or higher)
-- npm or yarn
-
-
-## 🛠️ Installation
-
-1. Install dependencies:
-  ```bash
-  npm install
-  # or
-  yarn install
-  ```
-
-2. Start the server:
-  ```bash
-  npm run start
-  # or
-  yarn start
-  ```
+- React with Vite for fast development and builds
+- Tailwind CSS for responsive UI styling
+- Supabase integration for database persistence
+- Course enrollment form with backend storage
+- Checkout flow with order and order item creation
+- Contact form that saves messages to Supabase
+- Cart persistence and product-order mapping
 
 ## 📁 Project Structure
 
-```
-/
-├── public/              # Static assets
+```text
+web/
+├── public/                      # Static assets and images
 ├── src/
-│   ├── components/      # Reusable UI components
-│   ├── pages/           # Page components
-│   ├── styles/          # Global styles and Tailwind configuration
-│   ├── App.jsx          # Main application component
-│   ├── main.jsx         # Application entry point
-│   └── Routes.jsx       # Application routes
-├── index.html           # HTML template
-├── package.json         # Project dependencies and scripts
-├── postcss.config.js    # PostCSS configuration for Tailwind
-├── tailwind.config.js   # Tailwind CSS configuration
-├── vite.config.js       # Vite configuration
+│   ├── components/              # Reusable UI components
+│   │   ├── common/               # Shared layout components
+│   │   └── ui/                   # Design system primitives
+│   ├── data/                     # Seed/static data definitions
+│   ├── pages/                    # Page-level route components
+│   ├── styles/                   # Global and Tailwind CSS styles
+│   ├── utils/                    # Helpers and Supabase client
+│   │   └── supabaseClient.js     # Supabase client initialization
+│   ├── App.jsx                   # App shell
+│   ├── main.jsx                  # Application entry point
+│   └── Routes.jsx                # Route definitions
+├── index.html                    # App HTML template
+├── package.json                  # Dependencies and scripts
+├── tailwind.config.js            # Tailwind config
+├── postcss.config.js            # PostCSS config
+├── vite.config.js                # Vite config
+└── README.md                     # Project documentation
 ```
 
-## 🧩 Adding Routes
+## 🔧 Prerequisites
 
-To add new routes to the application, update the `Routes.jsx` file:
+- Node.js 16 or higher
+- npm (or yarn)
+- Supabase project with a database
 
-```jsx
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+## ✅ Setup
 
-// Import page components
-import HomePage from "./pages/HomePage";
-import AboutPage from "./pages/AboutPage";
+1. Install dependencies:
 
-const AppRoutes = () => {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/about" element={<AboutPage />} />
-      </Routes>
-    </Router>
-  );
-};
-
-export default AppRoutes;
+```bash
+cd web
+npm install
 ```
 
-## 🎨 Styling
+2. Create environment variables in `web/.env`:
 
-This project uses Tailwind CSS for styling. The configuration includes:
+```env
+VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_ANON_KEY=your-public-anon-key
+```
 
-- Utility-first approach for rapid development
-- Custom theme configuration
-- Responsive design utilities
-- PostCSS and Autoprefixer integration
+3. Start the development server:
 
-## 📦 Deployment
+```bash
+npm run start
+```
 
-Build the application for production:
+4. Open the app at:
+
+```text
+http://localhost:4028
+```
+
+## 🧩 Supabase Integration
+
+The app uses `src/utils/supabaseClient.js` to initialize the Supabase client:
+
+```js
+import { createClient } from '@supabase/supabase-js';
+
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export default supabase;
+```
+
+### Tables used in Supabase
+
+- `contacts`
+- `enrollments`
+- `products`
+- `courses`
+- `orders`
+- `order_items`
+- `cart_items`
+
+### Development RLS policies
+
+For local testing, use `web/supabase_dev_policies.sql` to allow anonymous inserts and selects in development. These policies are intentionally permissive and should not remain enabled in production.
+
+## 🧪 Running Production Build
+
+Build the app for production:
 
 ```bash
 npm run build
 ```
 
+Preview the production build:
+
+```bash
+npm run preview
+```
+
+## 🛠️ Common Scripts
+
+- `npm run start` — Run the Vite development server
+- `npm run build` — Build production assets
+- `npm run preview` — Preview the built app locally
+
+## 📝 Notes for Developers
+
+- Checkout logic is in `src/pages/Checkout/index.jsx`
+- Enrollment submission is in `src/pages/Courses/CourseDetail.jsx`
+- Contact form logic is in `src/pages/Contact/ContactInfo.jsx`
+- Cart utilities are in `src/utils/cartUtils.js`
+
+### Important behavior
+
+- Order creation now includes `order_number`
+- Enrollment records now include `course_id`
+- Order items now include `product_id`
+- The app may store non-UUID product ids in `order_items` if the product source uses numeric ids
+
+## 📌 Troubleshooting
+
+- If the app fails to start, confirm `web/.env` contains valid Supabase values
+- If inserts fail, check Supabase RLS policies and `anon` permissions
+- If the build fails due to syntax, open the file reported by Vite/Babel and look for unmatched JSX tags or braces
+
 ## 🙏 Acknowledgments
 
-- Built with [Rocket.new](https://rocket.new)
-- Powered by React and Vite
-- Styled with Tailwind CSS
-
-Built with ❤️ on Rocket.new
+Built with React, Vite, Tailwind CSS, and Supabase.
