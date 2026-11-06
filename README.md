@@ -142,3 +142,6 @@ npm run preview
 ## 🙏 Acknowledgments
 
 Built with React, Vite, Tailwind CSS, and Supabase.
+
+deploy link :https://cifer-troofer-website.vercel.app
+figma link : https://www.figma.com/design/cqbGd9cWuhfdhq61mgyr1o/cifer-Troofer?node-id=4-2&t=ickqentNQ8ghdcrS-0
